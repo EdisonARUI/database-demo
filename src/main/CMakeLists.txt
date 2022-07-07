@@ -1,5 +1,12 @@
 set(DEMO_DB_SRC
         main.cpp
+        executor.cpp
+        metadata.cpp
+        optimizer.cpp
+        parser.cpp
+        storage.cpp
+        trx.cpp
+        util.cpp
         )
 
 add_executable(bydb
