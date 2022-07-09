@@ -8,6 +8,8 @@ using namespace hsql;
 using namespace std;
 
 int main(int argc, char* argv[]) {
+    argv[1]= "show columns db.t";
+//    printf("%s",argv[1]);
     string query = argv[1];
 
     // parse a given query
@@ -31,5 +33,6 @@ int main(int argc, char* argv[]) {
                 result.errorColumn());
         return -1;
     }
+    return 0;
 }
 

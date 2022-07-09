@@ -1,6 +1,20 @@
 #include <iostream>
+#include "parser.h"
 
 using namespace std;
+
+using namespace bydb;
+using namespace hsql;
+
+static bool ExecStmt(string stmt) {
+    Parser parser;
+    if (parser.parseStatement(stmt)) {
+        return true;
+    }
+
+    return false;
+}
+
 
 int main() {
     cout << "# Welcome to ByteYoung DB!!!" << endl;
@@ -9,12 +23,15 @@ int main() {
 
     string cmd;
     while (true) {
-        std::getline(std::cin, cmd);
+        getline(cin, cmd);
         if (cmd == "exit") {
             break;
         }
+        if (ExecStmt(cmd)) {
+            cout << "# ERROR: Failed to execute '" << cmd << "'" << endl;
+        }
     }
 
-    cout << "# Farewell~~~ " << std::endl;
+    cout << "# Farewell~~~ " << endl;
     return 0;
 }
