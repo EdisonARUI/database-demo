@@ -14,11 +14,12 @@ public:
     Parser();
     ~Parser();
 
-    bool parseStatement(std::string query);
+    bool parseStatement(std::string query);//入口输入sql语句
 
-    SQLParserResult* getResult() { return result_; }
+    SQLParserResult* getResult() { return result_; }//返回parser解析结果
 
 private:
+    //check接口不断校验meta元信息
     bool checkStmtsMeta();
 
     bool checkMeta(const SQLStatement* stmt);

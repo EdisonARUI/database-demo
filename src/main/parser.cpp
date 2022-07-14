@@ -17,7 +17,7 @@ namespace bydb {
 
     bool Parser::parseStatement(std::string query) {
         result_ = new SQLParserResult;
-        SQLParser::parse(query, result_);
+        SQLParser::parse(query, result_);//调用sql-parser库接口
 
         if (result_->isValid()) {
             return checkStmtsMeta();
@@ -26,6 +26,7 @@ namespace bydb {
         return true;
     }
 
+    //校验meta元信息
     bool Parser::checkStmtsMeta() {
         for (size_t i = 0; i < result_->size(); ++i) {
             const SQLStatement* stmt = result_->getStatement(i);
@@ -37,6 +38,7 @@ namespace bydb {
         return false;
     }
 
+    //按meta元信息不同类别做校验
     bool Parser::checkMeta(const SQLStatement* stmt) {
         switch (stmt->type()) {
             case kStmtSelect:
@@ -191,8 +193,7 @@ namespace bydb {
         Table* table = g_meta_data.getTable(stmt->schema, stmt->tableName);
         if (table == nullptr) {
             std::cout << "# ERROR: Can not find table "
-                      << TableNameToString(table->name)
-                      << std::endl;
+                    << TableNameToString(table->schema(), table->name()) << std::endl;
             return true;
         }
 
@@ -220,14 +221,14 @@ namespace bydb {
     }
 
     bool Parser::checkColumn(Table* table, char* col_name) {
-        for (auto col_def : table->columns) {
+        for (auto col_def : *table->columns()) {
             if (strcmp(col_name, col_def->name) == 0) {
                 return false;
             }
         }
 
         std::cout << "# ERROR: Can not find column " << col_name << " in table "
-                  << TableNameToString(table->name) << std::endl;
+                << TableNameToString(table->schema(), table->name()) << std::endl;
         return true;
     }
 

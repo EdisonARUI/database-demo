@@ -37,11 +37,10 @@ namespace bydb {
         CreatePlan(CreateType t) : Plan(kCreate), type(t) {}
         CreateType type;
         bool ifNotExists;
-        char* filePath;
         char* schema;
         char* tableName;
         char* indexName;
-        std::vector<char*>* indexColumns;
+        std::vector<ColumnDefinition*>* indexColumns;
         std::vector<ColumnDefinition*>* columns;
     };
 
