@@ -8,6 +8,14 @@
 using namespace hsql;
 
 namespace bydb {
+    void Executor::init() {
+        opTree_ = generateOperator(planTree_);
+    }
+
+    bool Executor::exec() {
+        return opTree_->exec();
+    }
+
     BaseOperator* Executor::generateOperator(Plan* plan) {
         BaseOperator* op = nullptr;
         BaseOperator* next = nullptr;
